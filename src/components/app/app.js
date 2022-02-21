@@ -13,17 +13,17 @@ class App extends Component {
     super(props);
     this.state = {
       data: [
-        { name: 'John C.', salary: 800, increase: false, id: 1, },
-        { name: 'Alex M.', salary: 3000, increase: false, id: 2, },
-        { name: 'Michael J.', salary: 5000, increase: true, id: 3, },
-      ],
+        { name: 'John C.', salary: 800, increase: false, rise: true, id: 1, },
+        { name: 'Alex M.', salary: 3000, increase: false, rise: false, id: 2, },
+        { name: 'Michael J.', salary: 5000, increase: true, rise: false, id: 3, },
+      ]
     };
-    this.id = 4;
+    this.maxId = 4;
   }
 
   addItem = (name, salary) => {
     this.setState(({ data }) => {
-      return { data: [...data, { name, salary, increase: false, id: this.id++ }] }
+      return { data: [...data, { name, salary, increase: false, id: this.maxId++ }] }
     })
   }
 
@@ -33,10 +33,33 @@ class App extends Component {
     })
   }
 
+  onToggleIncrease = (id) => {
+    this.setState(({ data }) => ({
+      data: data.map(item => {
+        if (item.id === id) {
+          return { ...item, increase: !item.increase }
+        }
+        return item;
+      })
+    }))
+  }
+
+  onToggleRise = (id) => {
+    this.setState(({ data }) => ({
+      data: data.map(item => {
+        if (item.id === id) {
+          return { ...item, rise: !item.rise }
+        }
+        return item;
+      })
+    }))
+  }
+
   render() {
     return (
       <div className="app">
-        <AppInfo />
+        <AppInfo
+          data={this.state.data} />
         <div className="search-panel">
           <SearchPanel />
           <AppFilter />
@@ -44,6 +67,8 @@ class App extends Component {
         <EmployeesList
           data={this.state.data}
           onDelete={this.deleteItem}
+          onToggleIncrease={this.onToggleIncrease}
+          onToggleRise={this.onToggleRise}
         />
         <EmployeesAddForm
           onAdd={this.addItem}
