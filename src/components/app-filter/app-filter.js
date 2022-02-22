@@ -1,36 +1,35 @@
-import { Component } from 'react';
-
 import './app-filter.css';
 
-class AppFilter extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      term: ''
-    }
-  }
+const AppFilter = ({ onFilter, filter }) => {
 
-  render() {
-    return (
-      <div className="btn-group" >
-        <button
-          className="btn btn-light"
-          type="button">
-          Все сотрудники
-        </button>
-        <button
-          className="btn btn-outline-light"
-          type="button">
-          На повышение
-        </button>
-        <button
-          className="btn btn-outline-light"
-          type="button">
-          З/П больше 1000$
-        </button>
-      </div>
-    );
-  }
+  const className1 = filter === 'all' ? "btn btn-light" : "btn btn-outline-light";
+  const className2 = filter === 'rise' ? "btn btn-light" : "btn btn-outline-light";
+  const className3 = filter === 'moreThen1000' ? "btn btn-light" : "btn btn-outline-light";
+
+  return (
+    <div className="btn-group" >
+      <button
+        className={className1}
+        type="button"
+        onClick={() => onFilter('all')}>
+        Все сотрудники
+      </button>
+      <button
+        className={className2}
+        type="button"
+        onClick={() => onFilter('rise')}
+      >
+        На повышение
+      </button>
+      <button
+        className={className3}
+        type="button"
+        onClick={() => onFilter('moreThen1000')}>
+        З/П больше 1000$
+      </button>
+    </div>
+  );
 }
+
 
 export default AppFilter;
